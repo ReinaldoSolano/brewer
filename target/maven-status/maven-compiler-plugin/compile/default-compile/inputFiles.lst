@@ -1,0 +1,11 @@
+/home/reinaldo/workspace/brewer/src/main/java/com/algaworks/brewer/model/Sabor.java
+/home/reinaldo/workspace/brewer/src/main/java/com/algaworks/brewer/model/Cerveja.java
+/home/reinaldo/workspace/brewer/src/main/java/com/algaworks/brewer/controller/CervejasController.java
+/home/reinaldo/workspace/brewer/src/main/java/com/algaworks/brewer/controller/EstilosController.java
+/home/reinaldo/workspace/brewer/src/main/java/com/algaworks/brewer/config/WebConfig.java
+/home/reinaldo/workspace/brewer/src/main/java/com/algaworks/brewer/model/Estilo.java
+/home/reinaldo/workspace/brewer/src/main/java/com/algaworks/brewer/model/Origem.java
+/home/reinaldo/workspace/brewer/src/main/java/com/algaworks/brewer/controller/ClientesController.java
+/home/reinaldo/workspace/brewer/src/main/java/com/algaworks/brewer/config/init/AppInitializer.java
+/home/reinaldo/workspace/brewer/src/main/java/com/algaworks/brewer/controller/CidadesController.java
+/home/reinaldo/workspace/brewer/src/main/java/com/algaworks/brewer/controller/UsuariosController.java
