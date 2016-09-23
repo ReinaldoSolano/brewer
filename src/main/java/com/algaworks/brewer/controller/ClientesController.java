@@ -39,8 +39,7 @@ public class ClientesController {
 	}
 
 	@PostMapping("/novo")
-	public ModelAndView salvar(@Valid Cliente cliente, BindingResult result, Model model,
-			RedirectAttributes attributes) {
+	public ModelAndView salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attributes) {
 		if (result.hasErrors()) {
 			return novo(cliente);
 		}
