@@ -2,8 +2,6 @@ package com.algaworks.brewer.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -18,7 +16,7 @@ import com.algaworks.brewer.repository.CidadesRepository;
 @RequestMapping("/cidades")
 public class CidadesController {
 
-	private static final Logger logger = LoggerFactory.getLogger(CidadesController.class);
+	//private static final Logger logger = LoggerFactory.getLogger(CidadesController.class);
 
 	@Autowired
 	private CidadesRepository cidadesRepository;

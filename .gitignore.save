@@ -1,0 +1,1 @@
+System.out.println(">>>>>>>> este é o diretório : " +path.get("HOME"));
