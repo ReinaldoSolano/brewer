@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,9 +31,11 @@ public class Cidade implements Serializable {
 	@Column(name = "bw_codigo")
 	private Long codigo;
 
+	@NotBlank(message = "Nome é obrigatório")
 	@Column(name = "bw_nome")
 	private String nome;
 
+	@NotNull(message = "Estado é obrigatório")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "bw_codigo_estado")
 	@JsonIgnore

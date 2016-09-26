@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/LayoutPadrao">
 
 <section layout:fragment="conteudo">
@@ -13,31 +11,26 @@
 	</div>
 
 	<div class="container-fluid">
-		<!-- <div class="alert  alert-danger  alert-dismissible" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<i class="fa  fa-exclamation-circle"></i> Já existe um produto com o nome informado.
-		</div> -->
 
-		<form >
+
+		<form method="POST" th:object="${cidade}" th:action="@{/cidades/novo}">
+			<brewer:message />
 			<div class="row">
-				<div class="col-sm-3  form-group">
-					<label for="estado">Estado</label> 
-					<select id="estado" class="form-control">
+				<div class="form-group  col-sm-4  bw-required" brewer:classforerror="estado">
+					<label for="estado" class="control-label">Estado</label>
+					<select id="estado" class="form-control" th:field="*{estado}">
 						<option value="">Selecione o estado</option>
-						<option value="RS">Rio Grande do Sul</option>
-						<option value="PR">Paraná</option>
-						<option value="SC">Santa Catarina</option>
+						<option th:each="estado : ${estados}" th:value="${estado.codigo}" th:text="${estado.nome}">São Paulo</option>
 					</select>
 				</div>
-				<div class="col-sm-9  form-group">
-					<label for="nome">Nome</label> <input id="nome" type="text"
-						class="form-control" />
+
+				<div class="form-group  col-sm-8  bw-required" brewer:classforerror="nome">
+					<label for="nome" class="control-label">Nome</label>
+					<input type="text" class="form-control" id="nome" th:field="*{nome}" />
 				</div>
 			</div>
-			
-			<div class="form-group">
-				<button class="btn  btn-primary" type="submit">Salvar</button>
-			</div>
+
+			<button type="submit" class="btn  btn-primary">Salvar</button>
 		</form>
 	</div>
 </section>
