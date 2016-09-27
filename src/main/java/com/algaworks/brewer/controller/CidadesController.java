@@ -8,6 +8,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
@@ -53,6 +55,7 @@ public class CidadesController {
 	}
 
 	@PostMapping("/novo")
+	@CacheEvict(value = "cidades", key = "#cidade.estado.codigo", condition = "cidade.temEstado()")
 	public ModelAndView nova(@Valid Cidade cidade, BindingResult result, Model model, RedirectAttributes attributes) {
 
 		if (result.hasErrors()) {
@@ -61,6 +64,7 @@ public class CidadesController {
 
 		try {
 			cadastroCidadeService.salvar(cidade);
+			logger.info("Cidade salva com sucesso!");
 		} catch (CidadeExistenteException e) {
 			result.rejectValue("nome", e.getMessage(), e.getMessage());
 			return novo(cidade);
@@ -68,23 +72,26 @@ public class CidadesController {
 		return new ModelAndView("redirect:/cidade/CadastroCidade");
 	}
 
+	@Cacheable(value = "cidades", key = "#codigoEstado")
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<Cidade> pesquisarPorCodigoEstado(
 			@RequestParam(name = "estado", defaultValue = "-1") Long codigoEstado) {
 		try {
-			Thread.sleep(500);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 		}
 		return cidadesRepository.findByEstadoCodigo(codigoEstado);
 	}
-	
+
 	@GetMapping
 	public ModelAndView pesquisar(CidadeFilter cidadeFilter, BindingResult result,
-			@PageableDefault(size = 2) Pageable pageable, HttpServletRequest httpServletRequest) {
+			@PageableDefault(size = 5) Pageable pageable, HttpServletRequest httpServletRequest) {
 
 		ModelAndView mv = new ModelAndView("cidade/PesquisaCidades");
+		mv.addObject("estados", estadosRepository.findAll());
 
-		PageWrapper<Cidade> paginaWrapper = new PageWrapper<>(cidadesRepository.filtrar(cidadeFilter, pageable), httpServletRequest);
+		PageWrapper<Cidade> paginaWrapper = new PageWrapper<>(cidadesRepository.filtrar(cidadeFilter, pageable),
+				httpServletRequest);
 		mv.addObject("pagina", paginaWrapper);
 
 		return mv;

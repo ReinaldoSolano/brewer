@@ -15,9 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.algaworks.brewer.model.Cerveja;
 import com.algaworks.brewer.model.Cidade;
-import com.algaworks.brewer.repository.filter.CervejaFilter;
 import com.algaworks.brewer.repository.filter.CidadeFilter;
 import com.algaworks.brewer.repository.paginacao.PaginacaoUtil;
 
@@ -39,6 +37,7 @@ public class CidadesRepositoryImpl implements CidadesRepositoryQueries {
 		paginacaoUtil.preparar(criteria, pageable);
 
 		adicionarFiltro(filtro, criteria);
+		criteria.createAlias("estado", "e");
 		return new PageImpl<>(criteria.list(), pageable, totalRegistrosFiltroUtilizado(filtro));
 	}
 
@@ -52,7 +51,7 @@ public class CidadesRepositoryImpl implements CidadesRepositoryQueries {
 	private void adicionarFiltro(CidadeFilter filtro, Criteria criteria) {
 		if (filtro != null) {
 			if (!StringUtils.isEmpty(filtro.getEstado())) {
-				criteria.add(Restrictions.eq("sku", filtro.getEstado()));
+				criteria.add(Restrictions.eq("estado", filtro.getEstado()));
 			}
 			if (!StringUtils.isEmpty(filtro.getNome())) {
 				criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));

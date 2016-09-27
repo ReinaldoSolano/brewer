@@ -37,6 +37,7 @@ public class CervejasRepositoryImpl implements CervejasRepositoryQueries {
 		paginacaoUtil.preparar(criteria, pageable);
 
 		adicionarFiltro(filtro, criteria);
+		
 		return new PageImpl<>(criteria.list(), pageable, totalRegistrosFiltroUtilizado(filtro));
 	}
 
