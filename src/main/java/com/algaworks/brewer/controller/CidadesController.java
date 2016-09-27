@@ -2,11 +2,14 @@ package com.algaworks.brewer.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.algaworks.brewer.controller.page.PageWrapper;
 import com.algaworks.brewer.model.Cidade;
 import com.algaworks.brewer.repository.CidadesRepository;
 import com.algaworks.brewer.repository.EstadosRepository;
+import com.algaworks.brewer.repository.filter.CidadeFilter;
 import com.algaworks.brewer.service.CadastroCidadeService;
 import com.algaworks.brewer.service.exception.CidadeExistenteException;
 
@@ -71,6 +76,19 @@ public class CidadesController {
 		} catch (InterruptedException e) {
 		}
 		return cidadesRepository.findByEstadoCodigo(codigoEstado);
+	}
+	
+	@GetMapping
+	public ModelAndView pesquisar(CidadeFilter cidadeFilter, BindingResult result,
+			@PageableDefault(size = 2) Pageable pageable, HttpServletRequest httpServletRequest) {
+
+		ModelAndView mv = new ModelAndView("cidade/PesquisaCidades");
+
+		PageWrapper<Cidade> paginaWrapper = new PageWrapper<>(cidadesRepository.filtrar(cidadeFilter, pageable), httpServletRequest);
+		mv.addObject("pagina", paginaWrapper);
+
+		return mv;
+
 	}
 
 }
