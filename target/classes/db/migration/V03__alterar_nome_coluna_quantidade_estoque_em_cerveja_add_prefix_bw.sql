@@ -1,1 +1,0 @@
-alter table cerveja change bw_quantidade_estoque bw_quantidade_estoque INTEGER;
