@@ -14,7 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.algaworks.brewer.model.Usuario;
+import com.algaworks.brewer.repository.GruposRepository;
 import com.algaworks.brewer.service.CadastroUsuarioService;
+import com.algaworks.brewer.service.exception.EmailJaCadastradoException;
+import com.algaworks.brewer.service.exception.SenhaObrigatoriaNovoUsuarioException;
 
 @RequestMapping("/usuarios")
 @Controller
@@ -24,22 +27,38 @@ public class UsuariosController {
 
 	@Autowired
 	CadastroUsuarioService cadastroUsuarioService;
+	
+	@Autowired
+	GruposRepository gruposRepository;
 
 	@RequestMapping("/novo")
 	public ModelAndView novo(Usuario usario) {
 		ModelAndView mv = new ModelAndView("usuario/CadastroUsuario");
+		mv.addObject("grupos", gruposRepository.findAll());
 		return mv;
 	}
 
 	@RequestMapping(value = "/novo", method = RequestMethod.POST)
 	public ModelAndView cadastrar(@Valid Usuario usuario, BindingResult result, Model model,
 			RedirectAttributes attributes) {
+		
+		
 
 		if (result.hasErrors()) {
 			return novo(usuario);
 		}
+		
+		try {
+			cadastroUsuarioService.salvar(usuario);
+		} catch (EmailJaCadastradoException e) {
+			result.rejectValue("email", e.getMessage(), e.getMessage());
+			return novo(usuario);
+		} catch (SenhaObrigatoriaNovoUsuarioException e) {
+			result.rejectValue("senha", e.getMessage(), e.getMessage());
+			return novo(usuario);
+		}
 
-		cadastroUsuarioService.salvar(usuario);
+		
 		logger.info("Usuário salvo com sucesso!");
 		attributes.addFlashAttribute("mensagem", "Usuário salvo com sucesso!");
 

@@ -51,7 +51,7 @@
 			</div>
 
 			<div class="row">
-				<div class="col-sm-3  form-group" brewer:classforerror="senha">
+				<div class="col-sm-3  form-group" brewer:classforerror="senha" th:classappend="${usuario.novo} ? bw-required">
 					<label for="senha">Senha</label>
 					<input id="senha" type="password" class="form-control" th:field="*{senha}" />
 				</div>
@@ -62,9 +62,10 @@
 				</div>
 
 				<div class="form-group  col-sm-3">
-					<label class="control-label">Status</label>
+					<label for="ativo" class="control-label">Status</label>
 					<div>
-						<input type="checkbox" class="js-status" data-size=small data-off-color="danger" data-on-text="ativo" data-off-text="inativo">
+						<input id="ativo" type="checkbox" class="js-status" data-size=small data-off-color="danger" data-on-text="ativo" data-off-text="inativo"
+							th:field="*{ativo}">
 					</div>
 				</div>
 			</div>
@@ -73,14 +74,12 @@
 				<div class="form-group  col-sm-6">
 					<label class="control-label">Grupos</label>
 					<div>
-						<div class="checkbox  checkbox-inline">
-							<input type="checkbox" />
-							<label>Administrador</label>
-						</div>
-						<div class="checkbox  checkbox-inline">
-							<input type="checkbox" />
-							<label>Vendedor</label>
-						</div>
+						<th:block th:each="grupo : ${grupos}">
+							<div class="checkbox  checkbox-inline">
+								<input type="checkbox" th:value="${grupo.codigo}" th:field="*{grupos}" />
+								<label th:for="${#ids.prev('grupos')}" th:text="${grupo.nome}">Administrador</label>
+							</div>
+						</th:block>
 					</div>
 				</div>
 			</div>
