@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.algaworks.brewer.model.Usuario;
-import com.algaworks.brewer.repository.UsuarioRepository;
+import com.algaworks.brewer.repository.UsuariosRepository;
 import com.algaworks.brewer.service.exception.EmailJaCadastradoException;
 import com.algaworks.brewer.service.exception.SenhaObrigatoriaNovoUsuarioException;
 
 @Service
 public class CadastroUsuarioService {
 	@Autowired
-	UsuarioRepository usuarioRepository;
+	UsuariosRepository usuarioRepository;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;

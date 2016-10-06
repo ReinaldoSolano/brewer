@@ -7,23 +7,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.brewer.model.Estilo;
-import com.algaworks.brewer.repository.EstiloRepository;
+import com.algaworks.brewer.repository.EstilosRepository;
 import com.algaworks.brewer.service.exception.NomeEstiloJaCadastradoException;
 
 @Service
 public class CadastroEstiloService {
 
 	@Autowired
-	private EstiloRepository estiloRepository;
+	private EstilosRepository estilosRepository;
 
 	@Transactional
 	public Estilo salvar(Estilo estilo) {
-		
-		Optional<Estilo> estiloOptional = estiloRepository.findByNomeIgnoreCase(estilo.getNome());
+
+		Optional<Estilo> estiloOptional = estilosRepository.findByNomeIgnoreCase(estilo.getNome());
 		if (estiloOptional.isPresent()) {
 			throw new NomeEstiloJaCadastradoException("Nome do estilo já cadastrado");
 		}
-		return estiloRepository.saveAndFlush(estilo);
+		return estilosRepository.saveAndFlush(estilo);
 	}
 
 }

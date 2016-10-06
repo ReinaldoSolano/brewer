@@ -19,7 +19,7 @@ import com.algaworks.brewer.model.Estilo;
 import com.algaworks.brewer.repository.filter.EstiloFilter;
 import com.algaworks.brewer.repository.paginacao.PaginacaoUtil;
 
-public class EstiloRepositoryImpl implements EstiloRepositoryQueries {
+public class EstilosRepositoryImpl implements EstiloRepositoryQueries {
 
 	@PersistenceContext
 	private EntityManager manager;

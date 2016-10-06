@@ -22,7 +22,7 @@ import com.algaworks.brewer.model.Cerveja;
 import com.algaworks.brewer.model.Origem;
 import com.algaworks.brewer.model.Sabor;
 import com.algaworks.brewer.repository.CervejasRepository;
-import com.algaworks.brewer.repository.EstiloRepository;
+import com.algaworks.brewer.repository.EstilosRepository;
 import com.algaworks.brewer.repository.filter.CervejaFilter;
 import com.algaworks.brewer.service.CadastroCervejaService;
 
@@ -33,7 +33,7 @@ public class CervejasController {
 	private static final Logger logger = LoggerFactory.getLogger(CervejasController.class);
 
 	@Autowired
-	private EstiloRepository estiloRepository;
+	private EstilosRepository estilosRepository;
 
 	@Autowired
 	private CadastroCervejaService cadastroCervejaService;
@@ -45,7 +45,7 @@ public class CervejasController {
 	public ModelAndView novo(Cerveja cerveja) {
 		ModelAndView mv = new ModelAndView("cerveja/CadastroCerveja");
 		mv.addObject("sabores", Sabor.values());
-		mv.addObject("estilos", estiloRepository.findAll());
+		mv.addObject("estilos", estilosRepository.findAll());
 		mv.addObject("origens", Origem.values());
 		return mv;
 	}
@@ -71,7 +71,7 @@ public class CervejasController {
 
 		ModelAndView mv = new ModelAndView("cerveja/PesquisaCervejas");
 		mv.addObject("sabores", Sabor.values());
-		mv.addObject("estilos", estiloRepository.findAll());
+		mv.addObject("estilos", estilosRepository.findAll());
 		mv.addObject("origens", Origem.values());
 
 		PageWrapper<Cerveja> paginaWrapper = new PageWrapper<>(cervejasRepository.filtrar(cervejaFilter, pageable), httpServletRequest);
