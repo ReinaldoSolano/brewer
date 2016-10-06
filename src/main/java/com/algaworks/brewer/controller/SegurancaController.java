@@ -4,6 +4,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
 @Controller
 public class SegurancaController {
 
@@ -14,6 +15,11 @@ public class SegurancaController {
 		}
 
 		return "Login";
+	}
+
+	@GetMapping("/403")
+	public String acessoNegado() {
+		return "403";
 	}
 
 }
