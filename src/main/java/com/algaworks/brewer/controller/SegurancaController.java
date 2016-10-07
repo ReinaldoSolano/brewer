@@ -21,5 +21,10 @@ public class SegurancaController {
 	public String acessoNegado() {
 		return "403";
 	}
+	
+	@GetMapping("/logout")
+	public String logout() {
+		return "Login";
+	}
 
 }

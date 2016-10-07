@@ -41,7 +41,7 @@ public class CervejasController {
 	@Autowired
 	private CervejasRepository cervejasRepository;
 
-	@RequestMapping("/novo")
+	@RequestMapping("/nova")
 	public ModelAndView novo(Cerveja cerveja) {
 		ModelAndView mv = new ModelAndView("cerveja/CadastroCerveja");
 		mv.addObject("sabores", Sabor.values());
@@ -50,7 +50,7 @@ public class CervejasController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/novo", method = RequestMethod.POST)
+	@RequestMapping(value = "/nova", method = RequestMethod.POST)
 	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result, Model model,
 			RedirectAttributes attributes) {
 
@@ -62,7 +62,7 @@ public class CervejasController {
 		logger.info("Cerveja salva com sucesso!");
 		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");
 
-		return new ModelAndView("redirect:/cervejas/novo");
+		return new ModelAndView("redirect:/cervejas/nova");
 	}
 
 	@GetMapping
@@ -74,7 +74,8 @@ public class CervejasController {
 		mv.addObject("estilos", estilosRepository.findAll());
 		mv.addObject("origens", Origem.values());
 
-		PageWrapper<Cerveja> paginaWrapper = new PageWrapper<>(cervejasRepository.filtrar(cervejaFilter, pageable), httpServletRequest);
+		PageWrapper<Cerveja> paginaWrapper = new PageWrapper<>(cervejasRepository.filtrar(cervejaFilter, pageable),
+				httpServletRequest);
 		mv.addObject("pagina", paginaWrapper);
 
 		return mv;

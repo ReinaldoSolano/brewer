@@ -5,16 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +31,6 @@ import com.algaworks.brewer.service.exception.CidadeExistenteException;
 @RequestMapping("/cidades")
 public class CidadesController {
 
-	private static final Logger logger = LoggerFactory.getLogger(CidadesController.class);
-
 	@Autowired
 	private CidadesRepository cidadesRepository;
 
@@ -47,16 +40,17 @@ public class CidadesController {
 	@Autowired
 	private CadastroCidadeService cadastroCidadeService;
 
-	@GetMapping("/novo")
+	@GetMapping("/nova")
 	public ModelAndView novo(Cidade cidade) {
 		ModelAndView mv = new ModelAndView("cidade/CadastroCidade");
 		mv.addObject("estados", estadosRepository.findAll());
 		return mv;
 	}
 
-	@PostMapping("/novo")
-	@CacheEvict(value = "cidades", key = "#cidade.estado.codigo", condition = "cidade.temEstado()")
-	public ModelAndView nova(@Valid Cidade cidade, BindingResult result, Model model, RedirectAttributes attributes) {
+	@PostMapping("/nova")
+	// @CacheEvict(value = "cidades", key = "#cidade.estado.codigo", condition =
+	// "cidade.temEstado()")
+	public ModelAndView nova(@Valid Cidade cidade, BindingResult result, RedirectAttributes attributes) {
 
 		if (result.hasErrors()) {
 			return novo(cidade);
@@ -64,15 +58,15 @@ public class CidadesController {
 
 		try {
 			cadastroCidadeService.salvar(cidade);
-			logger.info("Cidade salva com sucesso!");
 		} catch (CidadeExistenteException e) {
 			result.rejectValue("nome", e.getMessage(), e.getMessage());
 			return novo(cidade);
 		}
-		return new ModelAndView("redirect:/cidade/CadastroCidade");
+		attributes.addFlashAttribute("mensagem", "Cidade salva com sucesso!");
+		return new ModelAndView("redirect:/cidades/nova");
 	}
 
-	@Cacheable(value = "cidades", key = "#codigoEstado")
+	// @Cacheable(value = "cidades", key = "#codigoEstado")
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<Cidade> pesquisarPorCodigoEstado(
 			@RequestParam(name = "estado", defaultValue = "-1") Long codigoEstado) {
@@ -85,7 +79,7 @@ public class CidadesController {
 
 	@GetMapping
 	public ModelAndView pesquisar(CidadeFilter cidadeFilter, BindingResult result,
-			@PageableDefault(size = 5) Pageable pageable, HttpServletRequest httpServletRequest) {
+			@PageableDefault(size = 8) Pageable pageable, HttpServletRequest httpServletRequest) {
 
 		ModelAndView mv = new ModelAndView("cidade/PesquisaCidades");
 		mv.addObject("estados", estadosRepository.findAll());
