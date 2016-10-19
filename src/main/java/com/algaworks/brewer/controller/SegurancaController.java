@@ -13,7 +13,6 @@ public class SegurancaController {
 		if (user != null) {
 			return "redirect:/cervejas";
 		}
-
 		return "Login";
 	}
 
