@@ -31,6 +31,7 @@ import com.algaworks.brewer.service.CadastroCervejaService;
 public class CervejasController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CervejasController.class);
+	/*comentario JRebel*/
 
 	@Autowired
 	private EstilosRepository estilosRepository;
@@ -41,7 +42,7 @@ public class CervejasController {
 	@Autowired
 	private CervejasRepository cervejasRepository;
 
-	@RequestMapping("/nova")
+	@RequestMapping("/novo")
 	public ModelAndView novo(Cerveja cerveja) {
 		ModelAndView mv = new ModelAndView("cerveja/CadastroCerveja");
 		mv.addObject("sabores", Sabor.values());
