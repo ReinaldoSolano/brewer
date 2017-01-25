@@ -1,0 +1,2 @@
+ALTER TABLE cerveja
+  ADD volume VARCHAR(50) NOT NULL;

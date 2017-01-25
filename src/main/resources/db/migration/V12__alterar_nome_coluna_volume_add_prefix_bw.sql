@@ -1,0 +1,1 @@
+alter table cerveja change volume bw_volume VARCHAR(50) NOT NULL;
