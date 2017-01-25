@@ -88,6 +88,11 @@ public class Cerveja implements Serializable {
 	@JoinColumn(name = "bw_codigo_estilo")
 	private Estilo estilo;
 
+	@NotNull(message = "Selecione o volume da cerveja")
+	@Column(name = "bw_volume")
+	@Enumerated(EnumType.STRING)
+	private Volume volume;
+
 	@Column(name = "bw_foto")
 	private String foto;
 
@@ -190,6 +195,14 @@ public class Cerveja implements Serializable {
 		this.foto = foto;
 	}
 
+	public Volume getVolume() {
+		return volume;
+	}
+
+	public void setVolume(Volume volume) {
+		this.volume = volume;
+	}
+
 	public String getContentType() {
 		return contentType;
 	}
@@ -197,9 +210,9 @@ public class Cerveja implements Serializable {
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
-	
-	public String getFotoOuMock(){
-		return !StringUtils.isEmpty(foto)?foto:"cerveja-mock.png";
+
+	public String getFotoOuMock() {
+		return !StringUtils.isEmpty(foto) ? foto : "cerveja-mock.png";
 	}
 
 	@PrePersist

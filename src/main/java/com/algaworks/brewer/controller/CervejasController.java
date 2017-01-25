@@ -21,6 +21,7 @@ import com.algaworks.brewer.controller.page.PageWrapper;
 import com.algaworks.brewer.model.Cerveja;
 import com.algaworks.brewer.model.Origem;
 import com.algaworks.brewer.model.Sabor;
+import com.algaworks.brewer.model.Volume;
 import com.algaworks.brewer.repository.CervejasRepository;
 import com.algaworks.brewer.repository.EstilosRepository;
 import com.algaworks.brewer.repository.filter.CervejaFilter;
@@ -42,12 +43,13 @@ public class CervejasController {
 	@Autowired
 	private CervejasRepository cervejasRepository;
 
-	@RequestMapping("/novo")
+	@RequestMapping("/nova")
 	public ModelAndView novo(Cerveja cerveja) {
 		ModelAndView mv = new ModelAndView("cerveja/CadastroCerveja");
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("estilos", estilosRepository.findAll());
 		mv.addObject("origens", Origem.values());
+		mv.addObject("volumes", Volume.values());
 		return mv;
 	}
 
