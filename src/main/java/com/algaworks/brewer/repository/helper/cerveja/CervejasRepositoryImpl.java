@@ -23,7 +23,7 @@ public class CervejasRepositoryImpl implements CervejasRepositoryQueries {
 
 	@PersistenceContext
 	private EntityManager manager;
-	
+
 	@Autowired
 	private PaginacaoUtil paginacaoUtil;
 
@@ -31,13 +31,13 @@ public class CervejasRepositoryImpl implements CervejasRepositoryQueries {
 	@Transactional(readOnly = true)
 	@Override
 	public Page<Cerveja> filtrar(CervejaFilter filtro, Pageable pageable) {
-		
+
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cerveja.class);
 
 		paginacaoUtil.preparar(criteria, pageable);
 
 		adicionarFiltro(filtro, criteria);
-		
+
 		return new PageImpl<>(criteria.list(), pageable, totalRegistrosFiltroUtilizado(filtro));
 	}
 
@@ -67,6 +67,14 @@ public class CervejasRepositoryImpl implements CervejasRepositoryQueries {
 
 			if (filtro.getOrigem() != null) {
 				criteria.add(Restrictions.eq("origem", filtro.getOrigem()));
+			}
+
+			if (filtro.getVolume() != null) {
+				criteria.add(Restrictions.eq("volume", filtro.getVolume()));
+			}
+
+			if (filtro.getEnvasamento() != null) {
+				criteria.add(Restrictions.eq("envasamento", filtro.getEnvasamento()));
 			}
 
 			if (filtro.getValorDe() != null) {

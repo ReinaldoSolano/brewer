@@ -2,9 +2,11 @@ package com.algaworks.brewer.repository.filter;
 
 import java.math.BigDecimal;
 
+import com.algaworks.brewer.model.Envasamento;
 import com.algaworks.brewer.model.Estilo;
 import com.algaworks.brewer.model.Origem;
 import com.algaworks.brewer.model.Sabor;
+import com.algaworks.brewer.model.Volume;
 
 public class CervejaFilter {
 	private String sku;
@@ -12,6 +14,8 @@ public class CervejaFilter {
 	private Estilo estilo;
 	private Sabor sabor;
 	private Origem origem;
+	private Envasamento envasamento;
+	private Volume volume;
 	private BigDecimal valorDe;
 	private BigDecimal valorAte;
 
@@ -53,6 +57,22 @@ public class CervejaFilter {
 
 	public void setOrigem(Origem origem) {
 		this.origem = origem;
+	}
+
+	public Envasamento getEnvasamento() {
+		return envasamento;
+	}
+
+	public void setEnvasamento(Envasamento envasamento) {
+		this.envasamento = envasamento;
+	}
+
+	public Volume getVolume() {
+		return volume;
+	}
+
+	public void setVolume(Volume volume) {
+		this.volume = volume;
 	}
 
 	public BigDecimal getValorDe() {

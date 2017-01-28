@@ -33,7 +33,6 @@ import com.algaworks.brewer.service.CadastroCervejaService;
 public class CervejasController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CervejasController.class);
-	/*comentario JRebel*/
 
 	@Autowired
 	private EstilosRepository estilosRepository;
@@ -79,6 +78,8 @@ public class CervejasController {
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("estilos", estilosRepository.findAll());
 		mv.addObject("origens", Origem.values());
+		mv.addObject("volumes", Volume.values());
+		mv.addObject("envasamentos", Envasamento.values());
 
 		PageWrapper<Cerveja> paginaWrapper = new PageWrapper<>(cervejasRepository.filtrar(cervejaFilter, pageable),
 				httpServletRequest);
