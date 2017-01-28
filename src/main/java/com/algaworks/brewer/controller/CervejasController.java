@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.algaworks.brewer.controller.page.PageWrapper;
 import com.algaworks.brewer.model.Cerveja;
+import com.algaworks.brewer.model.Envasamento;
 import com.algaworks.brewer.model.Origem;
 import com.algaworks.brewer.model.Sabor;
 import com.algaworks.brewer.model.Volume;
@@ -50,6 +51,8 @@ public class CervejasController {
 		mv.addObject("estilos", estilosRepository.findAll());
 		mv.addObject("origens", Origem.values());
 		mv.addObject("volumes", Volume.values());
+		mv.addObject("envasamentos", Envasamento.values());
+		
 		return mv;
 	}
 

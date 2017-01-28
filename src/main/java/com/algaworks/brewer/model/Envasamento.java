@@ -1,12 +1,12 @@
 package com.algaworks.brewer.model;
 
-public enum Volume {
+public enum Envasamento {
 
-	MINI("269ml"), PEQUENA("300ml"), MEDIA("355ml"), GRANDE("473ml"), LITRO("1000ml");
+	LATA("Lata"), GARRAFA("Garrafa");
 
 	private String descricao;
 
-	private Volume(String descricao) {
+	private Envasamento(String descricao) {
 		this.descricao = descricao;
 	}
 

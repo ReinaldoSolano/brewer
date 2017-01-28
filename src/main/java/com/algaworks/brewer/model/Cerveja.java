@@ -93,6 +93,11 @@ public class Cerveja implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Volume volume;
 
+	@NotNull(message = "Selecione o envasamento da cerveja")
+	@Column(name = "bw_envasamento")
+	@Enumerated(EnumType.STRING)
+	private Envasamento envasamento;
+
 	@Column(name = "bw_foto")
 	private String foto;
 
@@ -201,6 +206,14 @@ public class Cerveja implements Serializable {
 
 	public void setVolume(Volume volume) {
 		this.volume = volume;
+	}
+
+	public Envasamento getEnvasamento() {
+		return envasamento;
+	}
+
+	public void setEnvasamento(Envasamento envasamento) {
+		this.envasamento = envasamento;
 	}
 
 	public String getContentType() {
